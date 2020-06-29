@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
@@ -18,6 +21,7 @@ import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -76,7 +80,13 @@ class DemoApplicationTests {
 		if (data.isPresent()){
 			System.out.println(data.get());
 		}
-
 	}
-
+	//分页
+	@Test
+	public void finAllToPage(){
+		Page<Item> page = itemDao.findAll(PageRequest.of(0, 5));
+		for(Item item:page) {
+			System.out.println(item);
+		}
+	}
 }
